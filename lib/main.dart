@@ -5,6 +5,8 @@ import 'package:ieshop/app_blocks.dart';
 import 'package:ieshop/app_events.dart';
 import 'package:ieshop/app_states.dart';
 import 'package:ieshop/pages/welcome/welcome.dart';
+
+import 'pages/welcome/bloc/welcome_blocs.dart';
 // import 'package:ieshop/app_states.dart';
 
 void main() {
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AppBlocs(),
+        create: (context) => WelcomeBloc(),
         child: ScreenUtilInit(
           builder: (context, child) => MaterialApp(
             title: 'IeShop App',

@@ -1,13 +1,13 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-
-part 'welcome_events.dart';
-part 'welcome_states.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ieshop/pages/welcome/bloc/welcome_events.dart';
+import 'package:ieshop/pages/welcome/bloc/welcome_states.dart';
 
 class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
-  WelcomeBloc() : super(WelcomeInitial()) {
-    on<WelcomeEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  WelcomeBloc() : super(WelcomeState()) {
+    on<WelcomeEvent>(
+      (event, emit) {
+        emit(WelcomeState(page: state.page));
+      },
+    );
   }
 }
