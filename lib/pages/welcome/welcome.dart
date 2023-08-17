@@ -15,6 +15,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  PageController pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,6 +29,7 @@ class _WelcomeState extends State<Welcome> {
               alignment: Alignment.topCenter,
               children: [
                 PageView(
+                  controller: pageController,
                   onPageChanged: (index) {
                     state.page = index;
                     BlocProvider.of<WelcomeBloc>(context).add(WelcomeEvent());
@@ -40,7 +42,8 @@ class _WelcomeState extends State<Welcome> {
                       subTitle:
                           'Forget about a for of paper all knoladge in one learning!',
                       title: 'First See Learning',
-                      imagePath: '',
+                      imagePath: 'assets/images/reading.png',
+                      pageController: pageController,
                     ),
                     _page(
                       index: 2,
@@ -49,7 +52,8 @@ class _WelcomeState extends State<Welcome> {
                       subTitle:
                           'Always keep in touch with your tutor & friend. Let\'s get onnected!',
                       title: 'Connect With Everyone',
-                      imagePath: '',
+                      imagePath: 'assets/images/boy.png',
+                      pageController: pageController,
                     ),
                     _page(
                       index: 3,
@@ -58,7 +62,8 @@ class _WelcomeState extends State<Welcome> {
                       subTitle:
                           'Anywhere, anytime. The time is at your discretion so study whenever you want.',
                       title: 'Always Fascinated Learning',
-                      imagePath: '',
+                      imagePath: 'assets/images/man.png',
+                      pageController: pageController,
                     ),
                   ],
                 ),
@@ -93,13 +98,17 @@ Widget _page(
     required String buttonName,
     required String title,
     required String subTitle,
-    required String imagePath}) {
+    required String imagePath,
+    required PageController pageController}) {
   return Column(
     children: [
       SizedBox(
         width: 345.w,
         height: 345.w,
-        child: const Text('Image one'),
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+        ),
       ),
       Container(
         child: Text(
@@ -121,27 +130,41 @@ Widget _page(
               fontWeight: FontWeight.normal),
         ),
       ),
-      Container(
-        margin: EdgeInsets.only(top: 100.h, left: 25.w, right: 25.w),
-        width: 325.w,
-        height: 50.h,
-        decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.all(Radius.circular(15.w)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: const Offset(0, 1))
-            ]),
-        child: Center(
-          child: Text(
-            buttonName,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.normal),
+      GestureDetector(
+        onTap: () {
+          if (index < 3) {
+            pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate);
+          } else {
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (context) => const MyHomePage(),
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("signIn", (route) => false);
+          }
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 100.h, left: 25.w, right: 25.w),
+          width: 325.w,
+          height: 50.h,
+          decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.all(Radius.circular(15.w)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: const Offset(0, 1))
+              ]),
+          child: Center(
+            child: Text(
+              buttonName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.normal),
+            ),
           ),
         ),
       )
