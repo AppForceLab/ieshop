@@ -23,8 +23,8 @@ class _WelcomeState extends State<Welcome> {
       child: Scaffold(body: BlocBuilder<WelcomeBloc, WelcomeState>(
         builder: (context, state) {
           return Container(
-            margin: EdgeInsets.only(top: 34.h),
-            width: 375.w,
+            margin: EdgeInsets.only(top: 35.h),
+            width: 376.w,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
